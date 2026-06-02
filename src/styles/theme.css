@@ -346,7 +346,8 @@ button {
   transform-origin: 92px 210px;
 }
 .tw-giraffe[data-pose='cheer'] .tw-arm-r {
-  transform: rotate(-38deg);
+  /* Keep the raise, just nudge this hand a touch lower and to the right. */
+  transform: translate(3px, 3px) rotate(-38deg);
   transform-origin: 168px 210px;
 }
 .tw-giraffe[data-pose='cheer'] .tw-spark {
