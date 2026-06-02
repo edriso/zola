@@ -1,0 +1,9 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Zola">
+  <rect width="512" height="512" fill="#fdf3e0" />
+  <rect x="226" y="206" width="60" height="170" rx="30" fill="#ecb24c" />
+  <circle cx="256" cy="176" r="66" fill="#ecb24c" />
+  <rect x="226" y="116" width="20" height="46" rx="10" fill="#ecb24c" /><circle cx="236" cy="112" r="18" fill="#b9763f" />
+  <rect x="266" y="116" width="20" height="46" rx="10" fill="#ecb24c" /><circle cx="276" cy="112" r="18" fill="#b9763f" />
+  <circle cx="232" cy="172" r="15" fill="#3a2a1c" /><circle cx="280" cy="172" r="15" fill="#3a2a1c" />
+  <ellipse cx="256" cy="330" rx="56" ry="36" fill="#b9763f" />
+</svg>
