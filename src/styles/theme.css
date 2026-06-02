@@ -219,11 +219,16 @@ button {
 .tw-giraffe svg {
   overflow: visible;
 }
-.tw-giraffe g,
-.tw-giraffe .tw-head,
-.tw-giraffe .tw-arm,
+/* Animated parts pivot in the SVG's own coordinate space (view-box), so the
+   user-space transform-origins below — shoulders, head base, tail base — are
+   interpreted correctly. The eyes are the exception: they blink around their
+   own centre, so they use fill-box. */
+.tw-giraffe g {
+  transform-box: view-box;
+}
 .tw-giraffe .tw-eye {
   transform-box: fill-box;
+  transform-origin: center;
 }
 
 .tw-body-bob {
@@ -304,7 +309,13 @@ button {
 }
 .tw-arm {
   transition: transform 0.5s cubic-bezier(0.3, 1.1, 0.4, 1);
-  transform-origin: top center;
+}
+/* Pivot each arm at its shoulder (user-space coordinates). */
+.tw-arm-l {
+  transform-origin: 92px 206px;
+}
+.tw-arm-r {
+  transform-origin: 168px 206px;
 }
 .tw-book,
 .tw-pencil,
