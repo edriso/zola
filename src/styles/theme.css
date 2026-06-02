@@ -1,0 +1,594 @@
+/* Zola theme and layout.
+   Ported faithfully from the prototype: warm savanna day theme, cozy night
+   theme, Baloo 2 for the friendly display type, Hanken Grotesk for UI. The
+   giraffe's poses and animations are pure CSS, keyed off data-pose. Internal
+   class names keep the `tw-` prefix from the prototype so the animation
+   selectors line up exactly. */
+@import 'tailwindcss';
+
+@theme {
+  --color-bg: #fdf3e0;
+  --color-accent: #6f9f6a;
+  --font-display: 'Baloo 2', system-ui, sans-serif;
+  --font-ui: 'Hanken Grotesk', system-ui, sans-serif;
+}
+
+:root {
+  --accent: #6f9f6a;
+  --display: 'Baloo 2', system-ui, sans-serif;
+  --ui: 'Hanken Grotesk', system-ui, sans-serif;
+  /* giraffe palette */
+  --gir: #ecb24c;
+  --gir-spot: #b9763f;
+  --gir-belly: #f7e2b0;
+  --desk: #c98a4e;
+  --desk-top: #dba968;
+  --line-ink: #b9763f;
+}
+
+/* Day — warm savanna */
+[data-theme='day'] {
+  --bg: #fdf3e0;
+  --bg-2: #f8ead2;
+  --surface: #fffaf0;
+  --surface-2: #f4e6cf;
+  --line: rgba(120, 80, 40, 0.13);
+  --ink: #4a3826;
+  --dim: #8c7355;
+  --faint: #b7a386;
+  --on-accent: #fffaf0;
+  --accent-soft: color-mix(in oklab, var(--accent) 16%, transparent);
+  color-scheme: light;
+}
+
+/* Night — cozy late study */
+[data-theme='night'] {
+  --bg: #221c2b;
+  --bg-2: #1b1622;
+  --surface: #2c2436;
+  --surface-2: #362c42;
+  --line: rgba(255, 235, 210, 0.1);
+  --ink: #f0e7da;
+  --dim: #b6a6bb;
+  --faint: #7c6e86;
+  --on-accent: #1b1622;
+  --gir: #e0a85a;
+  --gir-spot: #a86a3c;
+  --gir-belly: #efd9a8;
+  --desk: #5a4a3a;
+  --desk-top: #6e5a46;
+  --line-ink: #2c2436;
+  --accent-soft: color-mix(in oklab, var(--accent) 22%, transparent);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: radial-gradient(120% 80% at 50% 0%, var(--bg-2), var(--bg));
+  color: var(--ink);
+  font-family: var(--ui);
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  min-height: 100dvh;
+  transition:
+    background 0.5s ease,
+    color 0.5s ease;
+}
+::selection {
+  background: var(--accent-soft);
+}
+button {
+  font-family: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.tw-app {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.tw-stage {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tw-themebtn {
+  position: fixed;
+  top: 18px;
+  inset-inline-end: 20px;
+  z-index: 10;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: var(--surface);
+  color: var(--dim);
+  font-size: 19px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(120, 80, 30, 0.1);
+  transition: transform 0.15s;
+}
+.tw-settingsbtn {
+  position: fixed;
+  top: 18px;
+  inset-inline-start: 20px;
+  z-index: 10;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: var(--surface);
+  color: var(--dim);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(120, 80, 30, 0.1);
+  transition: transform 0.15s;
+}
+
+.tw-top {
+  text-align: center;
+  margin-bottom: 8px;
+}
+.tw-name {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  margin: 0;
+}
+.tw-togetherness {
+  font-size: 13px;
+  color: var(--dim);
+  margin-top: 2px;
+}
+.tw-togetherness b {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* speech bubble */
+.tw-bubble {
+  position: relative;
+  max-width: 320px;
+  text-align: center;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: 20px;
+  padding: 14px 20px;
+  margin: 14px 0 4px;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.35;
+  color: var(--ink);
+  box-shadow: 0 8px 22px rgba(120, 80, 30, 0.1);
+  animation: twpop 0.7s cubic-bezier(0.2, 0.9, 0.4, 1);
+}
+.tw-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  background: var(--surface);
+  border-right: 1.5px solid var(--line);
+  border-bottom: 1.5px solid var(--line);
+  transform: translateX(-50%) rotate(45deg);
+  border-bottom-right-radius: 3px;
+}
+@keyframes twpop {
+  from {
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.tw-giraffe-wrap {
+  position: relative;
+  margin: 4px 0 2px;
+}
+
+/* ---- giraffe animations ---- */
+.tw-giraffe {
+  position: relative;
+}
+.tw-giraffe svg {
+  overflow: visible;
+}
+.tw-giraffe g,
+.tw-giraffe .tw-head,
+.tw-giraffe .tw-arm,
+.tw-giraffe .tw-eye {
+  transform-box: fill-box;
+}
+
+.tw-body-bob {
+  transform-box: view-box;
+  animation: twbob 4s ease-in-out infinite;
+}
+@keyframes twbob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.tw-lid {
+  opacity: 0;
+  transform-origin: center;
+}
+.tw-eye .tw-pupil {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.tw-giraffe .tw-lid-l,
+.tw-giraffe .tw-lid-r {
+  animation: twblinklid 5s infinite;
+}
+.tw-eye {
+  animation: twblink 5s infinite;
+  transform-origin: center;
+}
+@keyframes twblink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.15);
+  }
+}
+@keyframes twblinklid {
+  0%,
+  92%,
+  100% {
+    opacity: 0;
+  }
+  95% {
+    opacity: 0;
+  }
+}
+
+.tw-tail {
+  transform-origin: 180px 210px;
+  animation: twswish 6s ease-in-out infinite;
+}
+@keyframes twswish {
+  0%,
+  100% {
+    transform: rotate(-2.5deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+}
+
+.tw-ear-l {
+  transform-origin: 104px 74px;
+}
+.tw-ear-r {
+  transform-origin: 156px 74px;
+}
+
+.tw-head {
+  transform-origin: 130px 100px;
+  transition: transform 0.6s cubic-bezier(0.3, 1, 0.4, 1);
+}
+.tw-arm {
+  transition: transform 0.5s cubic-bezier(0.3, 1.1, 0.4, 1);
+  transform-origin: top center;
+}
+.tw-book,
+.tw-pencil,
+.tw-spark {
+  transition: opacity 0.4s ease;
+}
+.tw-pencil,
+.tw-spark {
+  opacity: 0;
+}
+.tw-book {
+  opacity: 1;
+}
+
+/* IDLE: a friendly wave with the right arm */
+.tw-giraffe[data-pose='idle'] .tw-arm-r {
+  animation: twwave 2.4s ease-in-out infinite;
+  transform-origin: 168px 210px;
+}
+@keyframes twwave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-34deg);
+  }
+  50% {
+    transform: rotate(-20deg);
+  }
+  75% {
+    transform: rotate(-34deg);
+  }
+}
+
+/* STUDY: head tilts down to the book, pencil shows, subtle writing */
+.tw-giraffe[data-pose='study'] .tw-head {
+  transform: rotate(8deg) translateY(8px);
+}
+.tw-giraffe[data-pose='study'] .tw-pencil {
+  opacity: 1;
+  animation: twwrite 1.1s ease-in-out infinite;
+  transform-box: view-box;
+}
+@keyframes twwrite {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(3px, 1px);
+  }
+}
+.tw-giraffe[data-pose='study'] .tw-arm-l {
+  transform: rotate(-4deg);
+}
+
+/* CHEER: arms up, sparkles, a happy bounce */
+.tw-giraffe[data-pose='cheer'] .tw-arm-l {
+  transform: rotate(38deg);
+  transform-origin: 92px 210px;
+}
+.tw-giraffe[data-pose='cheer'] .tw-arm-r {
+  transform: rotate(-38deg);
+  transform-origin: 168px 210px;
+}
+.tw-giraffe[data-pose='cheer'] .tw-spark {
+  opacity: 1;
+}
+.tw-giraffe[data-pose='cheer'] .tw-spark-1 {
+  animation: twtwinkle 1s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.tw-giraffe[data-pose='cheer'] .tw-spark-2 {
+  animation: twtwinkle 1.2s ease-in-out infinite 0.2s;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.tw-giraffe[data-pose='cheer'] .tw-spark-3 {
+  animation: twtwinkle 0.9s ease-in-out infinite 0.1s;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes twtwinkle {
+  0%,
+  100% {
+    transform: scale(0.5);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+.tw-giraffe[data-pose='cheer'] .tw-body-bob {
+  animation: twcheerbounce 0.7s ease-in-out infinite;
+}
+@keyframes twcheerbounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ---- panel ---- */
+.tw-panel {
+  width: 100%;
+  max-width: 340px;
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+.tw-durs {
+  display: flex;
+  gap: 10px;
+}
+.tw-dur {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 72px;
+  padding: 12px 0;
+  border-radius: 16px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--dim);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.tw-dur span {
+  font-family: var(--ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.tw-dur.is-on {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-2px);
+}
+
+.tw-cta {
+  width: 100%;
+  padding: 16px 28px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 18px;
+  box-shadow: 0 10px 26px color-mix(in oklab, var(--accent) 35%, transparent);
+  transition:
+    filter 0.15s,
+    transform 0.1s;
+}
+.tw-cta:hover {
+  filter: brightness(1.05);
+}
+
+.tw-timer-row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.tw-progress {
+  width: 100%;
+  height: 10px;
+  border-radius: 99px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.tw-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 99px;
+  transition: width 1s linear;
+}
+.tw-time {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 40px;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+.tw-controls {
+  display: flex;
+  gap: 10px;
+}
+.tw-ctrl {
+  padding: 11px 22px;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tw-ctrl:hover {
+  border-color: var(--accent);
+}
+.tw-ctrl-quiet {
+  border-color: transparent;
+  color: var(--faint);
+}
+
+.tw-done-stat {
+  font-family: var(--display);
+  font-size: 17px;
+  color: var(--dim);
+}
+.tw-done-stat b {
+  color: var(--ink);
+}
+
+.tw-tap {
+  transition: transform 0.1s ease;
+}
+.tw-tap:active {
+  transform: scale(0.95);
+}
+
+/* confetti */
+.tw-confetti {
+  position: absolute;
+  inset: -40px 0 0 0;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 5;
+}
+.tw-confetti span {
+  position: absolute;
+  top: -10px;
+  display: block;
+  animation-name: twfall;
+  animation-timing-function: ease-in;
+  animation-iteration-count: 1;
+  opacity: 0.95;
+}
+@keyframes twfall {
+  0% {
+    transform: translateY(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(340px) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tw-body-bob,
+  .tw-tail,
+  .tw-eye,
+  .tw-arm-r,
+  .tw-pencil,
+  .tw-spark-1,
+  .tw-spark-2,
+  .tw-spark-3,
+  .tw-confetti span {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
