@@ -25,17 +25,6 @@ export function Giraffe({ pose = 'idle', size = 240 }: { pose?: Pose; size?: num
         />
 
         <g className="tw-body-bob">
-          <g className="tw-tail">
-            <path
-              d="M180 210 C193 218 199 232 196 246"
-              fill="none"
-              stroke="var(--gir)"
-              strokeWidth="7"
-              strokeLinecap="round"
-            />
-            <circle cx="196" cy="248" r="6" fill="var(--gir-spot)" />
-          </g>
-
           <path d="M78 250 C72 196 86 168 130 168 C174 168 188 196 182 250 Z" fill="var(--gir)" />
           <path
             d="M104 250 C100 210 110 192 130 192 C150 192 160 210 156 250 Z"

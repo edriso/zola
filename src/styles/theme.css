@@ -282,20 +282,6 @@ button {
   }
 }
 
-.tw-tail {
-  transform-origin: 180px 210px;
-  animation: twswish 6s ease-in-out infinite;
-}
-@keyframes twswish {
-  0%,
-  100% {
-    transform: rotate(-2.5deg);
-  }
-  50% {
-    transform: rotate(4deg);
-  }
-}
-
 .tw-ear-l {
   transform-origin: 104px 74px;
 }
@@ -587,7 +573,6 @@ button {
 
 @media (prefers-reduced-motion: reduce) {
   .tw-body-bob,
-  .tw-tail,
   .tw-eye,
   .tw-arm-r,
   .tw-pencil,
