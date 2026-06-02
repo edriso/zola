@@ -316,26 +316,7 @@ button {
   opacity: 1;
 }
 
-/* IDLE: a friendly wave with the right arm */
-.tw-giraffe[data-pose='idle'] .tw-arm-r {
-  animation: twwave 2.4s ease-in-out infinite;
-  transform-origin: 168px 210px;
-}
-@keyframes twwave {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(-34deg);
-  }
-  50% {
-    transform: rotate(-20deg);
-  }
-  75% {
-    transform: rotate(-34deg);
-  }
-}
+/* IDLE: both arms rest symmetrically at Zola's sides (no wave). */
 
 /* STUDY: head tilts down to the book, pencil shows, subtle writing */
 .tw-giraffe[data-pose='study'] .tw-head {
@@ -574,7 +555,6 @@ button {
 @media (prefers-reduced-motion: reduce) {
   .tw-body-bob,
   .tw-eye,
-  .tw-arm-r,
   .tw-pencil,
   .tw-spark-1,
   .tw-spark-2,
