@@ -316,7 +316,14 @@ button {
   opacity: 1;
 }
 
-/* IDLE: both arms rest symmetrically at Zola's sides (no wave). */
+/* IDLE: both arms rest at Zola's sides (no wave), each nudged a hair so the
+   hands sit naturally on the desk. */
+.tw-giraffe[data-pose='idle'] .tw-arm-l {
+  transform: translateX(3px) translateY(1px);
+}
+.tw-giraffe[data-pose='idle'] .tw-arm-r {
+  transform: translateY(3px);
+}
 
 /* STUDY: head tilts down to the book, pencil shows, subtle writing */
 .tw-giraffe[data-pose='study'] .tw-head {
@@ -336,8 +343,13 @@ button {
     transform: translate(3px, 1px);
   }
 }
+/* Keep the arms in the same resting spots as idle, so they don't jump when the
+   pose changes. */
 .tw-giraffe[data-pose='study'] .tw-arm-l {
-  transform: rotate(-4deg);
+  transform: translateX(3px) translateY(1px);
+}
+.tw-giraffe[data-pose='study'] .tw-arm-r {
+  transform: translateY(3px);
 }
 
 /* CHEER: arms up, sparkles, a happy bounce */
