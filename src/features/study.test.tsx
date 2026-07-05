@@ -61,7 +61,7 @@ describe('the study-together loop', () => {
 
   it('celebrates a natural finish and banks the full session', () => {
     render(<App />);
-    fireEvent.click(screen.getByRole('button', { name: '15 min' }));
+    fireEvent.click(screen.getByRole('button', { name: '15min' }));
     studyTogether();
     advance(15 * 60);
 
